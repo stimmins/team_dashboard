@@ -2,7 +2,9 @@ module Sources
   module Datapoints
     class HttpProxy < Sources::Datapoints::Base
       def get(targets, from, to, options = {})
-        Sources::HttpProxy.request(options.fetch(:http_proxy_url))
+        url = options.fetch(:http_proxy_url)
+        url = "#{url}?#{{:targets => targets, :from => from, :to => to}.to_query}"
+        Sources::HttpProxy.request(url)
       end
     end
   end
