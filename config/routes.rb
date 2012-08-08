@@ -14,6 +14,7 @@ TeamDashboard::Application.routes.draw do
   match "api/ci" => "api/ci#show"
   match "api/number" => "api/numbers#show"
   match "api/boolean" => "api/booleans#show"
+  match "api/list" => "api/list#show"
 
   # copy of backbone routes render the initial layout for first request
   match "dashboards" => "layout#index"
