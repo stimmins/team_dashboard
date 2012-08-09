@@ -1,0 +1,20 @@
+<div class="list-holder">
+  <table class="list">
+    <thead>
+      <tr class="titles">
+        {{#each titles}}
+          <th>{{this}}</th>
+        {{/each}}
+      </tr>
+    </thead>
+    <tbody class="data">
+      {{#each data}}
+        <tr class="item">
+          {{#each this}}
+            <td>{{this}}</td>
+          {{/each}}
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
