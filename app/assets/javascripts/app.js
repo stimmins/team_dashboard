@@ -19,7 +19,8 @@
 
     app.router = new window.app.Router();
     try {
-      Backbone.history.start({ pushState: true });
+//      Backbone.history.start({ pushState: true });
+      Backbone.history.start({ pushState: false });
     }
     catch(x) {
       console.log(x);
