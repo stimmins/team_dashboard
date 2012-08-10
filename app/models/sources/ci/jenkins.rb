@@ -2,7 +2,7 @@ require 'open-uri'
 
 module Sources
   module Ci
-    class Jenkins
+    class Jenkins < Sources::Ci::Base
 
       # Returns ruby hash:
       def get(server_url, project, options = {})
@@ -16,10 +16,9 @@ module Sources
       end
 
       def request_build_status(server_url, project)
-        request_url = "#{server_url}/job/#{project}/lastBuild/api/json"
-        uri = URI.parse(request_url)
-        Rails.logger.debug("Requesting from #{uri} ...")
-        JSON.parse(uri.read)
+        url = "#{server_url}/job/#{project}/lastBuild/api/json"
+        Rails.logger.debug("Requesting from #{url} ...")
+        ::HttpProxy.request(url)
       end
 
       def status(status)

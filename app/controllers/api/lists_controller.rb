@@ -1,5 +1,5 @@
 module Api
-  class ListController < BaseController
+  class ListsController < BaseController
 
     def show
       plugin = Sources.list_plugin(params[:source])

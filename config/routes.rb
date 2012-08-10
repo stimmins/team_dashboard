@@ -1,25 +1,24 @@
 TeamDashboard::Application.routes.draw do
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
 
   namespace :api do
-    resources :metrics
     resources :dashboards do
       resources :widgets
     end
+
+    resource  :datapoints, :only => :show
+    resource  :counter, :only => :show
+    resource  :ci, :only => :show, :controller => "ci"
+    resource  :number, :only => :show
+    resource  :boolean, :only => :show
+    resources :datapoints_targets, :only => :index
+    resource  :list, :only => :show
+#    match "api/list" => "api/list#show"
   end
 
-  match "api/datapoints" => "api/datapoints#show"
-  match "api/counter" => "api/counters#show"
-  match "api/ci" => "api/ci#show"
-  match "api/number" => "api/numbers#show"
-  match "api/boolean" => "api/booleans#show"
-  match "api/list" => "api/list#show"
-
   # copy of backbone routes render the initial layout for first request
-  match "dashboards" => "layout#index"
+  match "dashboards"     => "layout#index"
   match "dashboards/:id" => "layout#index"
-  match "about" => "layout#index"
+  match "about"          => "layout#index"
 
   root :to => 'layout#index'
 end

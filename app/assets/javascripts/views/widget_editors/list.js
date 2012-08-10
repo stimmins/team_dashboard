@@ -1,4 +1,4 @@
-(function ($, _, Backbone, views, models, collections) {
+(function ($, _, Backbone, views, models, collections, helpers) {
   "use strict";
 
   views.WidgetEditors.List = Backbone.View.extend({
@@ -46,12 +46,6 @@
       return this.form.getValue();
     },
 
-    getSources: function() {
-      var sources = $.Sources.getNumber();
-      sources.unshift("");
-      return sources;
-    },
-
     getUpdateIntervalOptions: function() {
       return [
         { val: 10, label: '10 sec' },
@@ -75,7 +69,10 @@
         source: {
           title: "Source",
           type: 'Select',
-          options: that.getSources(),
+          options: function(callback) {
+            var ops = { emptyOption: false };
+            callback(helpers.FormBuilder.options($.Sources.list, ops));
+          },
           validators: [
             "required"
           ]
@@ -94,4 +91,4 @@
     }
 
   });
-})($, _, Backbone, app.views, app.models, app.collections);
+})($, _, Backbone, app.views, app.models, app.collections, app.helpers);

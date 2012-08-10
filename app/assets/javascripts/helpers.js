@@ -1,4 +1,4 @@
-(function($, _, Backbone, helpers) {
+(function($, _, Backbone, bootbox, helpers) {
   "use strict";
 
   var colorPalette = [
@@ -88,4 +88,26 @@
     }
   };
 
-})($, _, Backbone, app.helpers);
+  helpers.FormBuilder = {
+    options: function(sources, options) {
+      options = options || {};
+      var result = "";
+      if (options.emptyOption === true) {
+        result += "<option></option>";
+      }
+
+      _.each(sources, function(source) {
+        if (source.available) {
+          result += "<option>" + source.name + "</option>";
+        } else {
+          result += "<option disabled>" + source.name + "</option>";
+        }
+      });
+      return result;
+    }
+  };
+
+  // make bootbox available in helper namespace
+  helpers.bootbox = bootbox;
+
+})($, _, Backbone, bootbox, app.helpers);
