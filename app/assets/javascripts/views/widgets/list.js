@@ -11,7 +11,7 @@
     },
 
     fetch: function() {
-      return this.model ? this.model.fetch() : null;
+      return this.model ? this.model.fetch({ suppressErrors: true }) : null;
     },
 
     updateModel: function() {
