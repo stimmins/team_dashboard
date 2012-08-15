@@ -4,7 +4,7 @@ module Sources
       def get(targets, from, to, options = {})
         url = options.fetch(:http_proxy_url)
         url = "#{url}?#{{:targets => targets, :from => from, :to => to}.to_query}"
-        ::HttpProxy.request(url)
+        ::HttpService.request(url)
       end
     end
   end

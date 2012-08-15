@@ -35,10 +35,18 @@
       if (this.$content.find('.error')) this.renderWidget();
     },
 
-    updateWidgetFail: function() {
+    updateWidgetFail: function(xhr, status, statusText) {
+      var message = null;
+      if (xhr.status === 0) {
+        message = "Could not connect to rails app";
+      } else if (xhr.responseText.length > 0){
+        message = JSON.parse(xhr.responseText).message;
+      } else {
+        message = statusText;
+      }
       this.triggerTimeout();
       this.$ajaxSpinner.hide();
-      this.showLoadingError();
+      this.showLoadingError(message);
     },
 
     clearTimeout: function() {
@@ -46,11 +54,11 @@
     },
 
     triggerTimeout: function() {
-      this.timerId = setTimeout(this.updateWidget, this.model.get('update_interval') * 10000);
+      this.timerId = setTimeout(this.updateWidget, this.model.get('update_interval') * 1000);
     },
 
-    showLoadingError: function() {
-      this.$content.html("<div class='error'><p>Error loading datapoints...</p></div>");
+    showLoadingError: function(message) {
+      this.$content.html("<div class='error'><p>Error loading datapoints: <strong>" + message + "</strong></p></div>");
     },
 
     toTitleCase: function(str) {

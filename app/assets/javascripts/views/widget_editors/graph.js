@@ -10,7 +10,7 @@
     initialize: function() {
       _.bindAll(this, "render", "sourceChanged", "showConnectionError");
 
-      this.collection = new collections.DatapointsTarget({ source: this.model.get('source') || $.Sources.datapoints[0]});
+      this.collection = helpers.datapointsTargetsPool.get(this.model.get('source') || $.Sources.datapoints[0]);
     },
 
     render: function() {
@@ -147,14 +147,18 @@
         }
 
         if ( $.Sources.datapoints[source].supports_target_browsing === true) {
-          this.collection.source = source;
-          this.collection.fetch(options)
-          .done(function() {
-            that.$targetInput.select2({ tags: that.collection.autocomplete_names(), width: "17em" });
-          })
-          .error(this.showConnectionError);
+          this.collection = helpers.datapointsTargetsPool.get(source);
+          if (this.collection.populated === true) {
+            that.$targetInput.selectable({ source: that.collection.autocomplete_names() });
+          } else {
+            this.collection.fetch()
+            .done(function() {
+              that.$targetInput.selectable({ source: that.collection.autocomplete_names() });
+            })
+            .error(this.showConnectionError);
+          }
         } else {
-          that.$targetInput.select2("destroy");
+          that.$targetInput.selectable("disable");
         }
       }
     },
