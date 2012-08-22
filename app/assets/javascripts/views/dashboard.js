@@ -48,7 +48,7 @@
 
     redraw: function() {
       if (this.timerId) clearTimeout(this.timerId);
-      window.location.href = "/dashboards/"+this.model.get("id");
+      window.location.href = "/?rqs=" + new Date().getTime() + "#dashboards/"+this.model.get("id");
     },
 
     _setup_editable_header: function() {
